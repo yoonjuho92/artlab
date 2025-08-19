@@ -18,8 +18,8 @@ export default function Sidebar() {
   return (
     <>
       {/* 사이드바 */}
-      <aside className="bg-amber-100 min-h-screen drop-shadow-md text-xl p-4">
-        <nav>
+      <aside className="bg-amber-100 min-h-screen drop-shadow-md text-xl p-4 flex flex-col">
+        <nav className="flex-1">
           <div className="text-amber-700 flex flex-row items-center gap-2 mb-10">
             <PencilLine size={20} />
             <p>AI와 만드는 나만의 이야기</p>
@@ -39,16 +39,15 @@ export default function Sidebar() {
               </Link>
             );
           })}
-
-          {/* 초기화 버튼 */}
-          <button
-            onClick={clearCharacter}
-            className="mt-10 flex items-center gap-2 text-red-600 hover:font-bold"
-          >
-            <Trash2 size={18} />
-            캐릭터 초기화
-          </button>
         </nav>
+        {/* 초기화 버튼 */}
+        <button
+          onClick={clearCharacter}
+          className="flex items-center gap-1 text-amber-700 hover:font-bold ml-auto"
+        >
+          <Trash2 size={12} />
+          <p className="text-sm">캐릭터 초기화</p>
+        </button>
       </aside>
     </>
   );
