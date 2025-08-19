@@ -3,7 +3,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { PencilLine } from "lucide-react";
+import { PencilLine, Trash2 } from "lucide-react";
+import { useStoryStore } from "@/stores/story";
 
 const nav = [
   { href: "/", label: "이야기 만들기" },
@@ -12,6 +13,7 @@ const nav = [
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const clearCharacter = useStoryStore((s) => s.clearCharacter);
 
   return (
     <>
@@ -37,6 +39,15 @@ export default function Sidebar() {
               </Link>
             );
           })}
+
+          {/* 초기화 버튼 */}
+          <button
+            onClick={clearCharacter}
+            className="mt-10 flex items-center gap-2 text-red-600 hover:font-bold"
+          >
+            <Trash2 size={18} />
+            캐릭터 초기화
+          </button>
         </nav>
       </aside>
     </>
