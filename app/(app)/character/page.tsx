@@ -23,7 +23,7 @@ export default function CharacterChatPage() {
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       role: "assistant",
-      content: `안녕하세요. ${writerName} 작가님! 저는 당신의 이야기 ${name}에요. 오늘은 무슨 얘기를 해 볼까요?`,
+      content: `안녕하세요. ${writerName} 작가님! 저는 당신의 이야기 속 ${name}에요. 오늘은 무슨 얘기를 해 볼까요?`,
     },
   ]);
   const [input, setInput] = useState("");
