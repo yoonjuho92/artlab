@@ -36,10 +36,12 @@ export type Step =
   | {
       page: number;
       kind: "Characteristics";
+      props?: Record<string, never>;
     }
   | {
       page: number;
       kind: "CharacterSum";
+      props?: Record<string, never>;
     };
 
 export const steps: Step[] = [

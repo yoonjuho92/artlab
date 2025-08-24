@@ -47,13 +47,7 @@ export default function Home() {
         />
 
         <div className="w-2/3 max-w-full text-xl flex flex-col items-center">
-          {/* 페이지는 값/로직 모름 — props만 전달 */}
-          <Cmp
-            key={pageKey}
-            {...("props" in step
-              ? (step.props as Record<string, unknown>)
-              : {})}
-          />
+          <Cmp key={pageKey} {...step.props} />
         </div>
 
         <ChevronRight

@@ -3,10 +3,12 @@
 import { useStoryStore } from "@/stores/story";
 
 export function InputStep({
+  key,
   label,
   valueKey,
   setterKey,
 }: {
+  key: string;
   label: string;
   valueKey: keyof ReturnType<typeof useStoryStore.getState>;
   setterKey: keyof ReturnType<typeof useStoryStore.getState>;
