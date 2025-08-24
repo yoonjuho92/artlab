@@ -3,11 +3,7 @@
 import { useMemo } from "react";
 import TextType from "@/components/TextType";
 
-interface TextTypeStepProps {
-  text?: string | (() => string);
-}
-
-export function TextTypeStep({ text }: TextTypeStepProps) {
+export function TextTypeStep({ text }: { text?: string | (() => string) }) {
   const resolvedText = useMemo(() => {
     try {
       if (typeof text === "function") {

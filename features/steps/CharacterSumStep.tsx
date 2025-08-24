@@ -8,6 +8,7 @@ import { RefreshCw } from "lucide-react"; // ✅ 아이콘
 export const CharacterSumStep = () => {
   const {
     writerName,
+    name,
     species,
     appearanceWords,
     appearanceSentence,
@@ -18,6 +19,7 @@ export const CharacterSumStep = () => {
   } = useStoryStore(
     useShallow((s) => ({
       writerName: s.writerName,
+      name: s.name,
       species: s.species,
       appearanceWords: s.appearanceWords,
       appearanceSentence: s.appearanceSentence,
@@ -47,6 +49,7 @@ export const CharacterSumStep = () => {
   const payload = useMemo(
     () => ({
       writerName,
+      name,
       species,
       appearanceWords,
       personalityWords,
@@ -55,6 +58,7 @@ export const CharacterSumStep = () => {
     }),
     [
       writerName,
+      name,
       species,
       appearanceWords,
       personalityWords,
@@ -133,24 +137,28 @@ export const CharacterSumStep = () => {
         </button>
       </div>
 
-      <p>제가 생각한 당신의 캐릭터는 이런 캐릭터에요!</p>
+      <p>제가 생각한 {name}는 이런 캐릭터에요!</p>
 
       {loading && (needAppearance || needPersonality) ? (
         <p className="text-gray-500">
-          당신의 캐릭터가 어떤 캐릭터일지 상상해 보고 있어요.
+          {name} 어떤 캐릭터일지 상상해 보고 있어요.
         </p>
       ) : (
         <>
-          <p>당신의 캐릭터는 아마 이런 모습일 거예요</p>
+          <p>{name}는 아마 이런 모습일 거예요</p>
           {appearanceSentence ? (
-            <p className="text-gray-800">{appearanceSentence}</p>
+            <p className="outline-1 p-2 outline-amber-700 rounded-lg bg-white shadow-lg">
+              {appearanceSentence}
+            </p>
           ) : (
             <p className="text-gray-400">외형 문장이 없습니다.</p>
           )}
 
           <p>성격은 아마 이런 성격이지 않을까요?</p>
           {personalitySentence ? (
-            <p className="text-gray-800">{personalitySentence}</p>
+            <p className="outline-1 p-2 outline-amber-700 rounded-lg bg-white shadow-lg">
+              {personalitySentence}
+            </p>
           ) : (
             <p className="text-gray-400">성격 문장이 없습니다.</p>
           )}

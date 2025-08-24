@@ -24,6 +24,7 @@ export const useStoryStore = create<StoryState>()(
         resetAll: () =>
           set({
             writerName: "",
+            name: "",
             species: "",
             appearanceWords: ["", "", ""],
             appearanceSentence: "",

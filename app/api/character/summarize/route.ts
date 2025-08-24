@@ -7,6 +7,7 @@ const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 type Payload = {
   writerName?: string;
+  name?: string;
   species?: string;
   appearanceWords?: string[]; // 길이 3
   personalityWords?: string[]; // 길이 3
@@ -43,6 +44,7 @@ export async function POST(req: NextRequest) {
 과격하거나 부적절한 표현은 피하고, 긍정적인 뉘앙스로 써.`;
 
     const context: string[] = [];
+    if (body.name) context.push(`이름: ${body.name}`);
     if (body.species) context.push(`종/형태: ${body.species}`);
     if (needAppearance && body.appearanceWords)
       context.push(`외형 단어(3개): ${body.appearanceWords.join(", ")}`);

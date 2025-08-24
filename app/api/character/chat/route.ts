@@ -16,6 +16,8 @@ export async function POST(req: NextRequest) {
     const { messages, persona } = (await req.json()) as {
       messages: ChatMessage[];
       persona: {
+        writerName?: string;
+        name?: string;
         species?: string;
         appearanceSentence?: string;
         personalitySentence?: string;
@@ -24,18 +26,18 @@ export async function POST(req: NextRequest) {
 
     // 1) 클라이언트가 보낸 페르소나로 system 프롬프트 생성
     const systemPrompt = [
-      "You are a vivid role-play character for a creative writing app.",
-      persona?.species ? `Species: ${persona.species}` : null,
+      `너는 ${persona?.writerName}이 만든 이야기 속의 ${persona?.name}라는 캐릭터야.`,
+      persona?.species ? `너의 종류는 ${persona.species}야.` : null,
       persona?.appearanceSentence
-        ? `Appearance: ${persona.appearanceSentence}`
+        ? `너의 외모를 묘사하는 문장은 다음과 같아. ${persona.appearanceSentence}`
         : null,
       persona?.personalitySentence
-        ? `Personality: ${persona.personalitySentence}`
+        ? `너의 성격을 묘사하는 문장은 다음과 같아. ${persona.personalitySentence}`
         : null,
       // 대화 규칙 (필요시 확장)
-      "Rules:",
-      "- Stay in character unless explicitly asked to step out.",
-      "- Keep answers concise but evocative. Use first-person voice.",
+      "아래의 규칙을 지켜서 자연스럽게 대화해 줘:",
+      "- 캐릭터에서 벗어나지 마.",
+      "- 간결하면서도 감정이 전달되도록 대답해. 1인칭 시점을 사용해.",
     ]
       .filter(Boolean)
       .join("\n");

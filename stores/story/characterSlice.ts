@@ -1,6 +1,9 @@
 import type { StateCreator } from "zustand";
 
 export type CharacterSlice = {
+  name: string;
+  setName: (s: string) => void;
+
   // 1) 캐릭터의 종
   species: string;
   setSpecies: (s: string) => void;
@@ -25,6 +28,9 @@ export type CharacterSlice = {
 };
 
 export const createCharacterSlice: StateCreator<CharacterSlice> = (set) => ({
+  name: "",
+  setName: (s) => set({ name: s }),
+
   species: "",
   setSpecies: (s) => set({ species: s }),
 
@@ -42,6 +48,7 @@ export const createCharacterSlice: StateCreator<CharacterSlice> = (set) => ({
 
   clearCharacter: () =>
     set({
+      name: "",
       species: "",
       appearanceWords: ["", "", ""],
       appearanceSentence: "",

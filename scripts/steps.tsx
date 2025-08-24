@@ -2,9 +2,8 @@ import { useStoryStore } from "@/stores/story";
 
 export type StepKind =
   | "TextType"
-  | "WriterName"
+  | "Input"
   | "SplitText"
-  | "CharacterSpecies"
   | "TrueFocus"
   | "Characteristics"
   | "CharacterSum";
@@ -17,18 +16,17 @@ export type Step =
     }
   | {
       page: number;
-      kind: "WriterName";
-      props?: Record<string, never>;
+      kind: "Input";
+      props: {
+        label: string;
+        valueKey: keyof ReturnType<typeof useStoryStore.getState>;
+        setterKey: keyof ReturnType<typeof useStoryStore.getState>;
+      };
     }
   | {
       page: number;
       kind: "SplitText";
       props: { text?: string | (() => string) };
-    }
-  | {
-      page: number;
-      kind: "CharacterSpecies";
-      props?: Record<string, never>;
     }
   | {
       page: number;
@@ -38,12 +36,10 @@ export type Step =
   | {
       page: number;
       kind: "Characteristics";
-      props?: Record<string, never>;
     }
   | {
       page: number;
       kind: "CharacterSum";
-      props?: Record<string, never>;
     };
 
 export const steps: Step[] = [
@@ -59,7 +55,16 @@ export const steps: Step[] = [
     kind: "TextType",
     props: { text: "모험을 시작하기 전에 몇 가지 질문을 드릴게요." },
   },
-  { page: 3, kind: "WriterName" },
+  {
+    page: 3,
+    kind: "Input",
+    props: {
+      label:
+        "당신의 이름을 알려주세요!\n이름이 부담스럽다면 별명이나 당신이 좋아하는 물건도 괜찮아요!",
+      valueKey: "writerName",
+      setterKey: "setWriterName",
+    },
+  },
   {
     page: 4,
     kind: "SplitText",
@@ -82,34 +87,52 @@ export const steps: Step[] = [
       },
     },
   },
-  { page: 6, kind: "CharacterSpecies" },
+  {
+    page: 6,
+    kind: "Input",
+    props: {
+      label:
+        "당신이 함께 여행을 떠날 주인공이 어떤 존재인지를 알려주세요.\n로봇? 사람? 동물? 그것도 아니라면...",
+      valueKey: "species",
+      setterKey: "setSpecies",
+    },
+  },
   {
     page: 7,
-    kind: "TrueFocus",
+    kind: "Input",
     props: {
-      text: () => {
-        const name = useStoryStore.getState().writerName?.trim();
-        const species = useStoryStore.getState().species?.trim();
-        return `${name}님과 ${species}`;
-      },
+      label: "그 주인공의 이름을 알려주세요!",
+      valueKey: "name",
+      setterKey: "setName",
     },
   },
   {
     page: 8,
+    kind: "TrueFocus",
+    props: {
+      text: () => {
+        const writerName = useStoryStore.getState().writerName?.trim();
+        const name = useStoryStore.getState().name?.trim();
+        return `${writerName}님과 ${name}`;
+      },
+    },
+  },
+  {
+    page: 9,
     kind: "TextType",
     props: {
       text: () => {
-        const species = useStoryStore.getState().species?.trim();
+        const name = useStoryStore.getState().name?.trim();
         return `그 전에 ${
-          species || "당신의 주인공"
+          name || "당신의 주인공"
         }에 대해 몇 가지만 더 알아볼까요?`;
       },
     },
   },
-  { page: 9, kind: "Characteristics" },
-  { page: 10, kind: "CharacterSum" },
+  { page: 10, kind: "Characteristics" },
+  { page: 11, kind: "CharacterSum" },
   {
-    page: 11,
+    page: 12,
     kind: "TextType",
     props: {
       text: "이제 왼쪽 캐릭터 탭에서\n당신이 만든 캐릭터와 이야기를 나눌 수 있어요!",

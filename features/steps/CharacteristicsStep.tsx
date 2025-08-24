@@ -6,7 +6,7 @@ import SplitTextOrig from "@/components/SplitText";
 const SplitText = React.memo(SplitTextOrig);
 
 export const CharacteristicsStep: React.FC = () => {
-  const species = useStoryStore((s) => s.species ?? "");
+  const name = useStoryStore((s) => s.name ?? "");
   const appearanceWords = useStoryStore((s) => s.appearanceWords);
   const setAppearanceWords = useStoryStore(
     (s) => s.setAppearanceWords as (next: string[]) => void
@@ -53,13 +53,13 @@ export const CharacteristicsStep: React.FC = () => {
     <div className="w-full max-w-3xl mx-auto space-y-10">
       {/* species가 바뀔 때만 text prop이 바뀌므로, 그때만 리렌더/리애니메이션 */}
       <SplitText
-        text={`당신의 모험에 함께할 ${species}의 외모와 성격을 알려주세요.`}
+        text={`당신의 모험에 함께할 ${name}의 외모와 성격을 알려주세요.`}
         {...splitProps}
       />
 
       {/* 외형 단어 */}
       <section className="space-y-4">
-        <p>{species}는 어떤 외모를 가지고 있나요?</p>
+        <p>{name}는 어떤 외모를 가지고 있나요?</p>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           {aWords.map((w, i) => (
             <input
@@ -78,7 +78,7 @@ export const CharacteristicsStep: React.FC = () => {
 
       {/* 성격 단어 */}
       <section className="space-y-4">
-        <div>{species}는 어떤 성격을 가지고 있나요?</div>
+        <div>{name}는 어떤 성격을 가지고 있나요?</div>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           {pWords.map((w, i) => (
             <input

@@ -9,10 +9,11 @@ import { useShallow } from "zustand/shallow";
 type ChatMessage = { role: "user" | "assistant"; content: string };
 
 export default function CharacterChatPage() {
-  const { writerName, species, appearanceSentence, personalitySentence } =
+  const { writerName, name, species, appearanceSentence, personalitySentence } =
     useStoryStore(
       useShallow((s) => ({
         writerName: s.writerName ?? "",
+        name: s.name ?? "",
         species: s.species ?? "",
         appearanceSentence: s.appearanceSentence ?? "",
         personalitySentence: s.personalitySentence ?? "",
@@ -22,7 +23,7 @@ export default function CharacterChatPage() {
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       role: "assistant",
-      content: `안녕하세요. ${writerName} 작가님! 저는 당신의 이야기 속 인물이에요. 오늘은 무슨 얘기를 해 볼까요?`,
+      content: `안녕하세요. ${writerName} 작가님! 저는 당신의 이야기 ${name}에요. 오늘은 무슨 얘기를 해 볼까요?`,
     },
   ]);
   const [input, setInput] = useState("");
@@ -110,6 +111,14 @@ export default function CharacterChatPage() {
     if (!el) return;
     el.scrollTo({ top: el.scrollHeight, behavior: "smooth" });
   }, [messages]);
+
+  if (!name) {
+    return (
+      <div className="h-screen w-full bg-amber-50 text-2xl text-amber-700 flex justify-center items-center">
+        {`Day1에서 캐릭터 설정을 완료하면 당신이 만든 캐릭터와 대화할 수 있습니다!`}
+      </div>
+    );
+  }
 
   return (
     <div className="mx-auto h-screen bg-amber-50 w-full p-4 flex flex-col gap-4">
